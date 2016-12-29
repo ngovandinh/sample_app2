@@ -1,6 +1,7 @@
-<li id="micropost-<%= micropost.id %>">
+<li id="micropost-<%= micropost.id %>" >
   <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
   <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
+  <h4><%= micropost.title %></h4>
   <span class="content">
   	<%= micropost.content %>
   	<%= image_tag micropost.picture.url if micropost.picture? %>	
@@ -12,5 +13,31 @@
                                        data: { confirm: "You sure?" } %>
     <% end %>
   </span>
+
+
+  <div class="col-md-11 col-md-offset-1">
+      <% if micropost.comments.any? %>
+        <ol class="microposts">
+          <%= render micropost.comments %>
+        </ol>    
+      <% end %> 
+  </div>   
+
+
+  <% if logged_in? %>
+     <div class="row">
+     <%= form_for(@comment) do |f| %>
+        <%= f.hidden_field :micropost_id, value: micropost.id %>
+        <div class="col-md-10">   
+          <%= f.text_area :content, placeholder: "Compose new comment...." %>
+        </div>
+        <div class="col-md-2">   
+          <%= f.submit "Comment", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+      </div>
+  <% end %>
+
+
 
 </li>

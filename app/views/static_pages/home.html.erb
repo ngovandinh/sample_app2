@@ -11,7 +11,7 @@
       </section>
 
       <section class="micropost_form">
-        <%= render 'shared/micropost_form' %>
+        <%= render 'shared/micropost_form'%>
       </section>
     </aside>
     <div class="col-md-8">
@@ -20,9 +20,11 @@
     </div>
 
   </div>
-<% else %>	
-  <div class="col-md-12">
+<% else %>
+  <div class="row">	
+    <div class="col-md-8">
       <h3>Micropost Feed</h3>
       <%= render 'shared/feed' %>
-  </div>	 
+    </div>	 
+  </div>
 <% end %>

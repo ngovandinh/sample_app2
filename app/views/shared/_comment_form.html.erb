@@ -1,0 +1,22 @@
+<!-- <dir class="row">
+	<%= form_tag "/my_controller/update2" do %>
+		<dir class="col-md-10 col-md-offset-0">  
+  			<%= text_field_tag :content, 'post comment...'  %>
+  		</dir>
+  		<dir class="col-md-2">  
+  			<%= submit_tag "Comment", class: "btn btn-primary" %>
+  		</dir>
+  	<% end %>
+</dir>
+ -->
+<div class="row">
+<%= form_for(@comment) do |f| %>
+  <%= f.hidden_field :micropost_id, value: micropost.id %>
+  <div class="col-md-10">   
+      <%= f.text_area :content, placeholder: "Compose new comment...." %>
+  </div>
+  <div class="col-md-2">   
+    <%= f.submit "Comment", class: "btn btn-primary" %>
+  </div>
+<% end %>
+</div>
