@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 
-gem 'sendgrid-ruby'
 # dung de phan tran
 gem 'will_paginate',           '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
