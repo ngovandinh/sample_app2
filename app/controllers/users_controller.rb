@@ -27,9 +27,9 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
-    @comment = current_user.comments.build  
-    @microposts = @user.microposts.paginate(page: params[:page], per_page: 5)
-    @feed_items = @user.feed.paginate(page: params[:page], per_page: 5)
+    # @comment = current_user.comments.build  
+    # @microposts = @user.microposts.paginate(page: params[:page], per_page: 5)
+    # @feed_items = @user.feed.paginate(page: params[:page], per_page: 5)
   end
 
   def new
