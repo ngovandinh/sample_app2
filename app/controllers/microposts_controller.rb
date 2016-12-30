@@ -1,6 +1,6 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: :destroy
+  before_action :logged_in_user, only: [:create, :destroy, :edit]
+  before_action :correct_user,   only: [:destroy, :update]
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
@@ -11,6 +11,15 @@ class MicropostsController < ApplicationController
        @feed_items = []
       render 'static_pages/home'
     end
+  end
+
+  def update
+    if @micropost.update_attributes(micropost_params)
+      flash[:success] = "Micropost is updated"
+    else
+      flash[:danger] = "Updated micropost is failed"
+    end  
+      redirect_to request.referrer || root_url
   end
 
   def destroy
