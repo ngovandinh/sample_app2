@@ -1,6 +1,7 @@
 class MicropostsController < ApplicationController
-  before_action :logged_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: :destroy
+  before_action :logged_in_user, only: [:create, :destroy, :edit]
+  before_action :correct_user,   only: [:destroy, :update]
+  before_action :micropost_params, only: [:create, :update]
 
   def create
     @micropost = current_user.microposts.build(micropost_params)
@@ -8,9 +9,21 @@ class MicropostsController < ApplicationController
       flash[:success] = "Micropost created!"
       redirect_to root_url
     else
-       @feed_items = []
+      # flash[:danger] = "Micropost is invalid!"
+      # redirect_to request.referrer || root_url
+      @comment = current_user.comments.build  
+      @feed_items = current_user.feed.paginate(page: params[:page], per_page: 5)
       render 'static_pages/home'
     end
+  end
+
+  def update
+    if @micropost.update_attributes(micropost_params)
+      flash[:success] = "Micropost is updated"
+    else
+      flash[:danger] = "Updated micropost is failed"
+    end  
+      redirect_to request.referrer || root_url
   end
 
   def destroy

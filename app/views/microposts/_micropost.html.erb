@@ -2,17 +2,28 @@
   <%= link_to gravatar_for(micropost.user, size: 50), micropost.user %>
   <span class="user"><%= link_to micropost.user.name, micropost.user %></span>
   <h4><%= micropost.title %></h4>
-  <span class="content">
-  	<%= micropost.content %>
-  	<%= image_tag micropost.picture.url if micropost.picture? %>	
-  </span>
+  	 <div class="row content">
+      <%= form_for(micropost) do |f| %>
+         <%= f.hidden_field :id, value: micropost.id %>         
+        <div class="col-md-10 col-md-offset--1">   
+          <%= f.text_area :content, value: micropost.content, class: "micropost_content-"+micropost.id.to_s, disabled: true %>
+        </div>
+        <div class="col-md-2" id="button_submit">   
+          <%= f.submit "save", class: "submit_micropost-"+micropost.id.to_s, style: "display: none"  %>
+        </div>
+      <% end %>
+      <%= image_tag micropost.picture.url if micropost.picture? %>  
+     </div>
   <span class="timestamp">
     Posted <%= time_ago_in_words(micropost.created_at) %> ago.
     <% if current_user?(micropost.user) %>
+      <a id="micropost_edit-<%= micropost.id %>" >edit</a>
       <%= link_to "delete", micropost, method: :delete,
                                        data: { confirm: "You sure?" } %>
     <% end %>
   </span>
+
+
 
 
   <div class="col-md-11 col-md-offset-1">
@@ -41,3 +52,10 @@
 
 
 </li>
+
+<script type="text/javascript">
+  $("#micropost_edit-<%= micropost.id %>").bind('click', function() {
+    $(".micropost_content-<%= micropost.id %>").prop('disabled', false);
+    $(".submit_micropost-<%= micropost.id %>").show();
+  });
+</script>

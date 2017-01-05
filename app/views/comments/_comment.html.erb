@@ -1,8 +1,31 @@
 <li id="comment-<%= comment.id %>">
   <%= link_to gravatar_for(comment.user, size: 50), comment.user %>
   <span class="user"><%= link_to comment.user.name, comment.user %></span>
-  <span class="content"><%= comment.content %></span>
-  <span class="timestamp">
+   <div class="row content">
+   		<%= form_for(comment) do |f| %>
+         <%= f.hidden_field :id, value: comment.id %>        	
+        <div class="col-md-10">   
+          <%= f.text_field :content, value: comment.content, class: "comment_content-"+comment.id.to_s, disabled: true %>
+        </div>
+        <div class="col-md-2" id="button_submit">   
+          <%= f.submit "save", class: "submit-"+comment.id.to_s, style: "display: none"  %>
+        </div>
+      <% end %>
+   </div>
+   <span class="timestamp">
     Posted <%= time_ago_in_words(comment.created_at) %> ago.
-  </span>
+   
+    <% if current_user?(comment.user) %>
+      <a id="comment_edit-<%= comment.id %>" >edit</a>
+      <%= link_to "delete", comment, method: :delete,
+                                           data: { confirm: "You sure to delet this?" } %>                          
+        
+    <% end %>
+   </span> 
 </li>
+<script type="text/javascript">
+  $("#comment_edit-<%= comment.id %>").bind('click', function() {
+  	$(".comment_content-<%= comment.id %>").prop('disabled', false);
+  	$(".submit-<%= comment.id %>").show();
+  });
+</script>

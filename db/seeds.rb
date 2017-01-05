@@ -40,8 +40,8 @@
 
 User.create!(name:  "Ngo Van Dinh",
              email: "ngovandinh@gmail.com",
-             password:              "foobar",
-             password_confirmation: "foobar",
+             password:              "123456",
+             password_confirmation: "123456",
              admin:     true,
              activated: true,
              activated_at: Time.zone.now)
